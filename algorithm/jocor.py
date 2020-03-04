@@ -3,7 +3,7 @@ import torch
 import torch.nn.functional as F
 from torch.autograd import Variable
 
-from model.cnn import MLPNet,CNN_small,CNN
+from model.cnn import MLPNet,CNN
 import numpy as np
 from common.utils import accuracy
 
@@ -54,9 +54,6 @@ class JoCoR:
         elif args.model_type == "mlp":
             self.model1 = MLPNet()
             self.model2 = MLPNet()
-        elif args.model_type == "cnn_small":
-            self.model1 = CNN_small(num_classes=num_classes)
-            self.model2 = CNN_small(num_classes=num_classes)
 
         self.model1.to(device)
         print(self.model1.parameters)
