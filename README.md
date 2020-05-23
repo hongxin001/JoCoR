@@ -17,3 +17,14 @@ Here is an example:
 ```bash
 python main.py --dataset cifar10 --noise_type symmetric --noise_rate 0.5 
 ```
+
+## Citation
+
+```
+@article{wei2020combating,
+  title={Combating noisy labels by agreement: A joint training method with co-regularization},
+  author={Wei, Hongxin and Feng, Lei and Chen, Xiangyu and An, Bo},
+  journal={CVPR},
+  year={2020}
+}
+```
