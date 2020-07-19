@@ -18,6 +18,22 @@ Here is an example:
 python main.py --dataset cifar10 --noise_type symmetric --noise_rate 0.5 
 ```
 
+## About Lambda
+Here is an example with lambda setting: 
+
+```bash
+python main.py --dataset cifar10 --noise_type symmetric --noise_rate 0.5 --co_lambda 0.9
+```
+
+Note: 
+The best Lambda depends on the datasets, noisy rate and basic models. Generally, the best lambda is between 0.5-0.9;
+
+For example, in my experiment, the best lambda for CIFAR10 with 20%,50% and asym 40% noise is 0.9. When it comes to 80% noise, the best is 0.65.
+For Cifar100 in my experiment, the best lambda should be 0.85.
+
+If you change the basic model to ResNet or add normalization in dataloader, you need to try different lambda for the best.
+
+
 ## Citation
 
 ```
