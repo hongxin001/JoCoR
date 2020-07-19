@@ -1,5 +1,5 @@
 # JoCoR 
-CVPR'20: Combating Noisy Labels by Agreement: A Joint Training Method with Co-Regularization.
+CVPR'20: [Combating Noisy Labels by Agreement: A Joint Training Method with Co-Regularization](https://openaccess.thecvf.com/content_CVPR_2020/html/Wei_Combating_Noisy_Labels_by_Agreement_A_Joint_Training_Method_with_CVPR_2020_paper.html).
 (Pytorch implementation)
 
 
