@@ -37,10 +37,12 @@ If you change the basic model to ResNet or add normalization in dataloader, you 
 ## Citation
 
 ```
-@article{wei2020combating,
-  title={Combating noisy labels by agreement: A joint training method with co-regularization},
-  author={Wei, Hongxin and Feng, Lei and Chen, Xiangyu and An, Bo},
-  journal={CVPR},
-  year={2020}
+@InProceedings{Wei_2020_CVPR,
+author = {Wei, Hongxin and Feng, Lei and Chen, Xiangyu and An, Bo},
+title = {Combating Noisy Labels by Agreement: A Joint Training Method with Co-Regularization},
+booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+month = {June},
+year = {2020}
 }
+
 ```
