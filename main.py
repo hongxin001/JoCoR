@@ -7,21 +7,22 @@ from data.mnist import MNIST
 import argparse, sys
 import datetime
 from algorithm.jocor import JoCoR
-
-
+import matplotlib.pyplot as plt
+from torchvision.datasets import STL10  # Import STL10 dataset
+from data.noisy_stl10 import NoisySTL10
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--lr', type=float, default=0.001)
+parser.add_argument('--lr', type=float, default=0.0001)
 parser.add_argument('--result_dir', type=str, help='dir to save result txt files', default='results')
 parser.add_argument('--noise_rate', type=float, help='corruption rate, should be less than 1', default=0.2)
 parser.add_argument('--forget_rate', type=float, help='forget rate', default=None)
-parser.add_argument('--noise_type', type=str, help='[pairflip, symmetric, asymmetric]', default='pairflip')
+parser.add_argument('--noise_type', type=str, help='[pairflip, symmetric, asymmetric]', default='symmetric')
 parser.add_argument('--num_gradual', type=int, default=10,
                     help='how many epochs for linear drop rate, can be 5, 10, 15. This parameter is equal to Tk for R(T) in Co-teaching paper.')
 parser.add_argument('--exponent', type=float, default=1,
                     help='exponent of the forget rate, can be 0.5, 1, 2. This parameter is equal to c in Tc for R(T) in Co-teaching paper.')
-parser.add_argument('--dataset', type=str, help='mnist, cifar10, or cifar100', default='mnist')
+parser.add_argument('--dataset', type=str, help='mnist, cifar10, stl10 or cifar100', default='stl10')
 parser.add_argument('--n_epoch', type=int, default=200)
 parser.add_argument('--seed', type=int, default=1)
 parser.add_argument('--print_freq', type=int, default=50)
@@ -32,7 +33,7 @@ parser.add_argument('--gpu', type=int, default=None)
 parser.add_argument('--co_lambda', type=float, default=0.1)
 parser.add_argument('--adjust_lr', type=int, default=1)
 parser.add_argument('--model_type', type=str, help='[mlp,cnn]', default='cnn')
-parser.add_argument('--save_model', type=str, help='save model?', default="False")
+parser.add_argument('--save_model', type=str, help='save model?', default="True")
 parser.add_argument('--save_result', type=str, help='save result?', default="True")
 
 
@@ -128,6 +129,22 @@ if args.dataset == 'cifar100':
                             noise_rate=args.noise_rate
                             )
 
+
+# load dataset
+if args.dataset == 'stl10':
+    input_channel = 3  # STL10 has 3 channels
+    num_classes = 10  # You can adjust this if needed
+    init_epoch = 20
+    args.epoch_decay_start = 80
+    filter_outlier = True
+    args.model_type = "cnn"
+
+    # Use NoisySTL10 dataset
+    train_dataset = NoisySTL10(root='./stl10_data', split='train', download=True, noise_type=args.noise_type, noise_rate=args.noise_rate, transform=transforms.ToTensor())
+    test_dataset = NoisySTL10(root='./stl10_data', split='test', download=True, noise_type=None, transform=transforms.ToTensor())
+
+
+
 if args.forget_rate is None:
     forget_rate = args.noise_rate
 else:
@@ -151,6 +168,7 @@ def main():
                                               shuffle=False)
     # Define models
     print('building model...')
+    print('We are using ', train_dataset, " for training")
 
     model = JoCoR(args, train_dataset, device, input_channel, num_classes)
 
